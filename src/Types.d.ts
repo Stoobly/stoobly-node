@@ -1,3 +1,3 @@
 export type QueryParams = {
-  [k: string]: string
-}
+  [k: string]: string;
+};

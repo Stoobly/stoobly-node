@@ -3,12 +3,13 @@ import HttpService from './http.service';
 export default class ConfigResource {
   CONFIGS_ENDPOINT = '/configs';
 
-  constructor(
-    private httpService: HttpService,
-  ) {}
+  constructor(private httpService: HttpService) {}
 
   summary(queryParams = {}) {
-    return this.httpService.show([this.CONFIGS_ENDPOINT, 'summary'], queryParams);
+    return this.httpService.show(
+      [this.CONFIGS_ENDPOINT, 'summary'],
+      queryParams
+    );
   }
 
   policies() {

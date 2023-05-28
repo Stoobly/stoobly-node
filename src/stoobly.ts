@@ -1,4 +1,4 @@
-import { ConfigResource, HttpService } from './resources';
+import {ConfigResource, HttpService} from './resources';
 
 export default class Stoobly {
   httpService: HttpService;

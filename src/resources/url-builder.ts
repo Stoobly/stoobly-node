@@ -2,7 +2,7 @@ export class UrlBuilder {
   url = '';
   query = false;
 
-  constructor() {  }
+  constructor() {}
 
   withPath(path: string) {
     if (this.url.length === 0) {
@@ -30,13 +30,13 @@ export class UrlBuilder {
       let tok = args[i];
 
       if (tok[0] === '/') {
-          tok = tok.replace('/', '');
+        tok = tok.replace('/', '');
       }
 
       if (path[pathLen - 1] === '/') {
-          path += tok;
+        path += tok;
       } else {
-          path += ('/' + tok);
+        path += '/' + tok;
       }
     }
 

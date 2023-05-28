@@ -1,12 +1,12 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, {AxiosRequestConfig} from 'axios';
 
-import { QueryParams } from '../Types';
-import { UrlBuilder } from './url-builder';
+import {QueryParams} from '../Types';
+import {UrlBuilder} from './url-builder';
 
 export default class HttpService {
   apiUrl: string;
 
-  constructor(apiUrl: string) { 
+  constructor(apiUrl: string) {
     this.apiUrl = apiUrl;
   }
 
@@ -14,44 +14,66 @@ export default class HttpService {
     return axios;
   }
 
-  index(pathComponents: (string | number)[], queryParams?: QueryParams, options?: AxiosRequestConfig) {
+  index(
+    pathComponents: (string | number)[],
+    queryParams?: QueryParams,
+    options?: AxiosRequestConfig
+  ) {
     const url: string = this.buildUrl(this.apiUrl, pathComponents, queryParams);
     return this.httpService.get(url, options);
   }
 
-  show(pathComponents: (string | number)[], queryParams?: QueryParams, options?: AxiosRequestConfig) {
+  show(
+    pathComponents: (string | number)[],
+    queryParams?: QueryParams,
+    options?: AxiosRequestConfig
+  ) {
     const url: string = this.buildUrl(this.apiUrl, pathComponents, queryParams);
     return this.httpService.get(url, options);
   }
 
-  create(pathComponents: (string | number)[], body?: object, options?: AxiosRequestConfig) {
+  create(
+    pathComponents: (string | number)[],
+    body?: object,
+    options?: AxiosRequestConfig
+  ) {
     const url: string = this.buildUrl(this.apiUrl, pathComponents);
     return this.httpService.post(url, body || {}, options);
   }
 
-  update(pathComponents: (string | number)[], body?: object, options?: AxiosRequestConfig) {
+  update(
+    pathComponents: (string | number)[],
+    body?: object,
+    options?: AxiosRequestConfig
+  ) {
     const url: string = this.buildUrl(this.apiUrl, pathComponents);
     return this.httpService.put(url, body || {}, options);
   }
 
-  destroy(pathComponents: (string | number)[], queryParams?: QueryParams, options?: AxiosRequestConfig) {
+  destroy(
+    pathComponents: (string | number)[],
+    queryParams?: QueryParams,
+    options?: AxiosRequestConfig
+  ) {
     const url: string = this.buildUrl(this.apiUrl, pathComponents, queryParams);
     return this.httpService.delete(url, options);
   }
 
-  buildUrl(apiUrl: string, pathComponents: (string | number)[], queryParams?: {[k: string]: string}) {
+  buildUrl(
+    apiUrl: string,
+    pathComponents: (string | number)[],
+    queryParams?: {[k: string]: string}
+  ) {
     const urlBuilder = new UrlBuilder();
     urlBuilder.withPath(apiUrl);
 
     for (const pathComponent of pathComponents) {
-      urlBuilder.
-         withPath(pathComponent.toString());
+      urlBuilder.withPath(pathComponent.toString());
     }
 
     for (const queryParam in queryParams) {
       if (queryParams.hasOwnProperty(queryParam)) {
-        urlBuilder.
-           search(queryParam, queryParams[queryParam]);
+        urlBuilder.search(queryParam, queryParams[queryParam]);
       }
     }
 
@@ -63,9 +85,13 @@ export default class HttpService {
 
     for (const key in params) {
       if (!queryString) {
-        queryString = `?${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`;
+        queryString = `?${encodeURIComponent(key)}=${encodeURIComponent(
+          params[key]
+        )}`;
       } else {
-        queryString += `&${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`;
+        queryString += `&${encodeURIComponent(key)}=${encodeURIComponent(
+          params[key]
+        )}`;
       }
     }
 
