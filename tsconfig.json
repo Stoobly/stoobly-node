@@ -1,11 +1,15 @@
 {
-  "extends": "./tsconfig.cjs.json",
   "compilerOptions": {
     "noEmit": true,
     "types": ["jest", "node"]
   },
+  "extends": "./tsconfig.cjs.json",
+  "include": ["src/**/*.ts", "test/**/*.ts"],
+  "paths": {
+    "@core/*": ["src/core"],
+    "@models/*": ["src/models/*"]
+  },
   "ts-node": {
     "experimentalResolver": true
-  },
-  "include": ["src/**/*.ts", "test/**/*.ts"]
+  }
 }

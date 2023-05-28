@@ -44,7 +44,6 @@ module.exports = {
     'id-blacklist': 'error',
     'id-length': 'off',
     'id-match': 'error',
-    'import/extensions': ['error', 'ignorePackages'],
     'init-declarations': 'off',
     'jsx-quotes': 'error',
     'key-spacing': 'error',

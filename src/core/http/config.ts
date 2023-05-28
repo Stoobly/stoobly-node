@@ -1,4 +1,6 @@
+import {AgentConfigResponse} from '../../models/config/types/config-response';
 import HttpService from './http.service';
+import {QueryParams} from './types';
 
 export default class ConfigResource {
   CONFIGS_ENDPOINT = '/configs';
@@ -16,15 +18,18 @@ export default class ConfigResource {
     return this.httpService.show([this.CONFIGS_ENDPOINT, 'policies']);
   }
 
-  show(queryParams?: any) {
-    return this.httpService.show([this.CONFIGS_ENDPOINT], queryParams);
+  show(queryParams?: QueryParams) {
+    return this.httpService.show<AgentConfigResponse>(
+      [this.CONFIGS_ENDPOINT],
+      queryParams
+    );
   }
 
-  create(body: object) {
+  create(body: any) {
     return this.httpService.create([this.CONFIGS_ENDPOINT], body);
   }
 
-  update(body: object) {
+  update(body: any) {
     return this.httpService.update([this.CONFIGS_ENDPOINT], body);
   }
 }

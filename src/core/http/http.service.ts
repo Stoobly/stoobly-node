@@ -1,6 +1,6 @@
 import axios, {AxiosRequestConfig} from 'axios';
 
-import {QueryParams} from '../Types';
+import {QueryParams} from './types';
 import {UrlBuilder} from './url-builder';
 
 export default class HttpService {
@@ -14,49 +14,49 @@ export default class HttpService {
     return axios;
   }
 
-  index(
+  index<T>(
     pathComponents: (string | number)[],
     queryParams?: QueryParams,
     options?: AxiosRequestConfig
   ) {
     const url: string = this.buildUrl(this.apiUrl, pathComponents, queryParams);
-    return this.httpService.get(url, options);
+    return this.httpService.get<T>(url, options);
   }
 
-  show(
+  show<T>(
     pathComponents: (string | number)[],
     queryParams?: QueryParams,
     options?: AxiosRequestConfig
   ) {
     const url: string = this.buildUrl(this.apiUrl, pathComponents, queryParams);
-    return this.httpService.get(url, options);
+    return this.httpService.get<T>(url, options);
   }
 
-  create(
+  create<T>(
     pathComponents: (string | number)[],
-    body?: object,
+    body?: any,
     options?: AxiosRequestConfig
   ) {
     const url: string = this.buildUrl(this.apiUrl, pathComponents);
-    return this.httpService.post(url, body || {}, options);
+    return this.httpService.post<T>(url, body || {}, options);
   }
 
-  update(
+  update<T>(
     pathComponents: (string | number)[],
-    body?: object,
+    body?: any,
     options?: AxiosRequestConfig
   ) {
     const url: string = this.buildUrl(this.apiUrl, pathComponents);
-    return this.httpService.put(url, body || {}, options);
+    return this.httpService.put<T>(url, body || {}, options);
   }
 
-  destroy(
+  destroy<T>(
     pathComponents: (string | number)[],
     queryParams?: QueryParams,
     options?: AxiosRequestConfig
   ) {
     const url: string = this.buildUrl(this.apiUrl, pathComponents, queryParams);
-    return this.httpService.delete(url, options);
+    return this.httpService.delete<T>(url, options);
   }
 
   buildUrl(

@@ -1,4 +1,5 @@
-import {ConfigResource, HttpService} from './resources';
+import {ConfigResource, HttpService} from './core/http';
+import {Config} from './models/config';
 
 export default class Stoobly {
   httpService: HttpService;
@@ -13,6 +14,7 @@ export default class Stoobly {
   }
 
   get config() {
-    return new ConfigResource(this.httpService);
+    const resource = new ConfigResource(this.httpService);
+    return new Config(resource);
   }
 }
