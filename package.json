@@ -1,0 +1,41 @@
+{
+  "name": "stoobly-node",
+  "version": "0.1.0",
+  "description": "Node.js library for Stoobly API",
+  "files": ["dist/**"],
+  "main": "dist/cjs/stoobly.js",
+  "scripts": {
+    "build": "rm -rf dist && mkdir dist && yarn build-esm && yarn build-cjs",
+    "build-esm": "mkdir -p dist/esm && tsc -p tsconfig.esm.json && echo '{\"type\":\"module\"}' > dist/esm/package.json",
+    "build-cjs": "mkdir -p dist/cjs && tsc -p tsconfig.cjs.json && echo '{\"type\":\"commonjs\"}' > dist/cjs/package.json",
+    "clean": "rm -rf ./node_modules/.cache ./dist",
+    "lint": "eslint --ext .js,.jsx,.ts .",
+    "prepack": "npm install && yarn build",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Stoobly/stoobly-node.git"
+  },
+  "keywords": [
+    "api",
+    "client",
+    "npm",
+    "stoobly"
+  ],
+  "author": "lvlichael8@gmail.com",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/Stoobly/stoobly-node/issues"
+  },
+  "homepage": "https://github.com/Stoobly/stoobly-node#readme",
+  "dependencies": {
+    "@types/node": "^20.2.5",
+    "axios": "^1.4.0",
+    "qs": "^6.11.2",
+    "typescript": "^5.0.4"
+  },
+  "devDependencies": {
+    "jest": "^29.5.0"
+  }
+}
