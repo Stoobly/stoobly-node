@@ -7,8 +7,8 @@ export default class Config {
     this.resource = resource;
   }
 
-  async dump() {
-    return await this.resource.show();
+  dump() {
+    return this.resource.show();
   }
 
   scenario() {}

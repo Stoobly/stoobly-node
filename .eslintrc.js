@@ -273,7 +273,6 @@ module.exports = {
           },
         ],
         '@typescript-eslint/no-explicit-any': 0,
-        '@typescript-eslint/explicit-function-return-type': 'error',
         '@typescript-eslint/no-var-requires': 0,
         'prefer-rest-params': 'off',
       },

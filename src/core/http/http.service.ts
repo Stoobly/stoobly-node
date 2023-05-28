@@ -72,9 +72,7 @@ export default class HttpService {
     }
 
     for (const queryParam in queryParams) {
-      if (queryParams.hasOwnProperty(queryParam)) {
-        urlBuilder.search(queryParam, queryParams[queryParam]);
-      }
+      urlBuilder.search(queryParam, queryParams[queryParam]);
     }
 
     return urlBuilder.url;

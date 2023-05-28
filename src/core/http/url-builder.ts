@@ -2,8 +2,6 @@ export class UrlBuilder {
   url = '';
   query = false;
 
-  constructor() {}
-
   withPath(path: string) {
     if (this.url.length === 0) {
       this.url = path;

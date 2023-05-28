@@ -5,7 +5,11 @@ import {QueryParams} from './types';
 export default class ConfigResource {
   CONFIGS_ENDPOINT = '/configs';
 
-  constructor(private httpService: HttpService) {}
+  httpService: HttpService;
+
+  constructor(httpService: HttpService) {
+    this.httpService = httpService;
+  }
 
   summary(queryParams = {}) {
     return this.httpService.show(
@@ -30,6 +34,9 @@ export default class ConfigResource {
   }
 
   update(body: any) {
-    return this.httpService.update([this.CONFIGS_ENDPOINT], body);
+    return this.httpService.update<AgentConfigResponse>(
+      [this.CONFIGS_ENDPOINT],
+      body
+    );
   }
 }
