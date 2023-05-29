@@ -1,4 +1,6 @@
-import {ConfigResource} from '../../core/http';
+import {ConfigResource} from '@core/http';
+
+import Scenario from './scenario';
 
 export default class Config {
   resource: ConfigResource;
@@ -11,5 +13,11 @@ export default class Config {
     return this.resource.show();
   }
 
-  scenario() {}
+  scenario() {
+    return new Scenario(this.resource);
+  }
+
+  summary() {
+    return this.resource.summary();
+  }
 }
