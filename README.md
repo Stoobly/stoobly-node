@@ -29,11 +29,11 @@ import Stoobly from 'stoobly';
 ## Configuration
 
 ### Setting a scenario
+
 ```js
 const stoobly = new Stoobly();
-stoobly.config.scenario.set(
-    <SCENARIO-KEY>
-)
+
+stoobly.config.scenario.set(<SCENARIO-KEY>)
     .then(res => console.log(res.data));
     .catch(error => console.error(error));
 ```

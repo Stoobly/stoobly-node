@@ -13,7 +13,7 @@ export default class Config {
     return this.resource.show();
   }
 
-  scenario() {
+  get scenario() {
     return new Scenario(this.resource);
   }
 

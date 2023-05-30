@@ -36,20 +36,23 @@ export class AgentConfig {
     if (!projectKey || !projectKey.length) {
       return;
     }
+
     return this.decodeKey(projectKey)?.i;
   }
 
   setProject(projectKey: string) {
-    this.proxy.intercept.project_key = projectKey;
+    this.proxy.intercept.project_key = projectKey.trim();
   }
 
   getScenario() {
     const projectId = this.getProjectId();
-    if (!projectId) return;
+    if (projectId === undefined) return;
+
     const scenarioKey = this.proxy.data[projectId]?.scenario_key;
     if (!scenarioKey || !scenarioKey.length) {
       return;
     }
+
     return scenarioKey;
   }
 
@@ -64,22 +67,22 @@ export class AgentConfig {
 
   setScenario(scenarioKey: string) {
     const projectId = this.getProjectId();
-    if (!projectId) {
+    if (projectId === undefined) {
       return;
     }
 
     const proxyDataRules = this.getProxyDataRules(projectId);
 
     if (!proxyDataRules) {
-      this.proxy.data[projectId] = {scenario_key: scenarioKey};
+      this.proxy.data[projectId] = {scenario_key: scenarioKey.trim()};
     } else {
-      this.proxy.data[projectId].scenario_key = scenarioKey;
+      this.proxy.data[projectId].scenario_key = scenarioKey.trim();
     }
   }
 
   removeScenario() {
     const projectId = this.getProjectId();
-    if (!projectId) {
+    if (projectId === undefined) {
       return;
     }
     const proxyDataRules = this.getProxyDataRules(projectId);
