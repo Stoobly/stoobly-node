@@ -1,10 +1,6 @@
 {
   "compilerOptions": {
     "noEmit": true,
-    "paths": {
-      "@core/*": ["./src/core/*"],
-      "@models/*": ["./src/models/*"]
-    },
     "types": ["jest", "node"]
   },
   "extends": "./tsconfig.cjs.json",

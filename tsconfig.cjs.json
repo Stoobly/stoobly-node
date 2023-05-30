@@ -8,6 +8,10 @@
     "alwaysStrict": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
+    "paths": {
+      "@core/*": ["./src/core/*"],
+      "@models/*": ["./src/models/*"]
+    },
     "strict": true,
     "strictFunctionTypes": true,
     "types": [ "node" ]
