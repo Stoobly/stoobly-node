@@ -4,7 +4,7 @@ The Stoobly Node library provides convenient access to [stoobly-agent](https://g
 
 ## Requirements
 
-Node 12 or higher.
+Node 14 or higher.
 
 ## Installation
 
