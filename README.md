@@ -11,7 +11,7 @@ Node 12 or higher.
 Install the package with:
 
 ```sh
-npm install stoobly --save
+npm install stoobly-node --save
 ```
 
 ## Usage
