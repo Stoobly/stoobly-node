@@ -30,7 +30,7 @@ describe('config', () => {
   });
 
   it('has scenario method', () => {
-    const scenario = config.scenario();
+    const scenario = config.scenario;
     expect(scenario).toBeInstanceOf(Scenario);
   });
 });
