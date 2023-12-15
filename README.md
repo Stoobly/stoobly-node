@@ -17,13 +17,13 @@ npm install stoobly-node --save
 ## Usage
 
 ```js
-const { default: Stoobly } = require('stoobly');
+const { default: Stoobly } = require('stoobly-node');
 ```
 
 Or using ES modules:
 
 ```js
-import Stoobly from 'stoobly';
+import Stoobly from 'stoobly-node';
 ```
 
 ## Configuration
@@ -34,6 +34,6 @@ import Stoobly from 'stoobly';
 const stoobly = new Stoobly();
 
 stoobly.config.scenario.set(<SCENARIO-KEY>)
-    .then(res => console.log(res.data));
+    .then(res => console.log(res.data))
     .catch(error => console.error(error));
 ```
