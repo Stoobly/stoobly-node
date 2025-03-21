@@ -35,10 +35,10 @@ Configures outgoing requests to specify a scenario to use. sessionId defaults to
 ```js
 const stoobly = new Stoobly();
 
-stoobly.applyScenario('<SCENARIO-KEY>');
+const sessionId = stoobly.applyScenario('<SCENARIO-KEY>');
 ```
 
-Configures outgoing requests to specify a scenario and sessionId to use.
+Configures outgoing requests to specify a scenario and resume a session.
 
 ```js
 const stoobly = new Stoobly();

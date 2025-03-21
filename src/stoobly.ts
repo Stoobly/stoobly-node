@@ -1,3 +1,4 @@
+import {DEFAULT_UI_URL} from '@constants/config';
 import {ConfigResource, HttpService} from './core/http';
 import {Interceptor} from './core/interceptor';
 import {Config} from './models/config';
@@ -8,7 +9,7 @@ export default class Stoobly {
   interceptor: Interceptor;
 
   constructor() {
-    this.httpService = new HttpService('http://localhost:4200');
+    this.httpService = new HttpService(DEFAULT_UI_URL);
     this.interceptor = new Interceptor();
   }
 
@@ -27,8 +28,8 @@ export default class Stoobly {
     } 
 
     if (scenarioKey) {
-      this.interceptor.withScenario(scenarioKey, options?.sessionId);
-      this.interceptor.activate();
+      this.interceptor.withScenario(scenarioKey);
+      return this.interceptor.activate(options?.sessionId);
     }
   } 
 }

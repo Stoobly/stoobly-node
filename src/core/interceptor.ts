@@ -12,10 +12,14 @@ export class Interceptor {
     return this._active;
   }
 
-  activate() {
+  activate(sessionId?: string) {
+    this.sessionId = sessionId || (new Date()).getTime().toString();
+
     this.decorateFetch();
     this.decorateXMLHttpRequestOpen();
     this._active = true;
+
+    return this.sessionId;
   }
 
   deactivate() {
@@ -30,9 +34,8 @@ export class Interceptor {
     this._active = false;
   }
 
-  withScenario(key: string, sessionId?: string): void {
+  withScenario(key: string): void {
     this.scenarioKey = key;
-    this.sessionId = sessionId || (new Date()).getTime().toString();
   }
 
   private decorateFetch() {

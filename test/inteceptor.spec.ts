@@ -20,8 +20,8 @@ describe("Interceptor", () => {
     beforeAll(async () => {
       Interceptor.originalFetch = fetchMock;
       interceptor = new Interceptor();
-      interceptor.withScenario(scenarioKey, sessionId);
-      interceptor.activate();
+      interceptor.withScenario(scenarioKey);
+      interceptor.activate(sessionId);
       await fetch(url);
     });
 
@@ -69,8 +69,8 @@ describe("Interceptor", () => {
     let setRequestHeaderMock: SpiedFunction<(name: string, value: string) => void>;
 
     beforeAll(() => {
-      interceptor.withScenario(scenarioKey, sessionId);
-      interceptor.activate();
+      interceptor.withScenario(scenarioKey);
+      interceptor.activate(sessionId);
 
       const xhr = new XMLHttpRequest();
       xhr.open("GET", url);
