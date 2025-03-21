@@ -1,7 +1,8 @@
 import {describe, expect, it} from '@jest/globals';
 
-import Stoobly from '../src/stoobly';
 import {Config} from '@models/config';
+
+import Stoobly from '../src/stoobly';
 
 describe('stoobly', () => {
   it('has config property', () => {
