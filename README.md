@@ -26,14 +26,23 @@ Or using ES modules:
 import Stoobly from 'stoobly';
 ```
 
-## Configuration
+## Examples
 
 ### Setting a scenario
+
+Configures outgoing requests to specify a scenario to use. sessionId defaults to current time
 
 ```js
 const stoobly = new Stoobly();
 
-stoobly.config.scenario.set(<SCENARIO-KEY>)
-    .then(res => console.log(res.data));
-    .catch(error => console.error(error));
+stoobly.useScenario('<SCENARIO-KEY>');
+```
+
+Configures outgoing requests to specify a scenario and sessionId to use
+
+```js
+const stoobly = new Stoobly();
+
+stoobly.useScenario('<SCENARIO-KEY>', { sessionId: '<SESSION-ID>' });
+
 ```
