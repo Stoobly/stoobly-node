@@ -3,8 +3,10 @@
   "compilerOptions": {
     "outDir": "./dist/esm",
     "paths": {
+      "@constants/*": ["./src/constants/*"],
       "@core/*": ["./src/core/*"],
-      "@models/*": ["./src/models/*"]
+      "@models/*": ["./src/models/*"],
+      "@types/*": ["./src/types/*"]
     },
     "module": "es2022",
   },
