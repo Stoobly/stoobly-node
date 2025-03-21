@@ -4,7 +4,7 @@ The Stoobly Node library provides convenient access to [stoobly-agent](https://g
 
 ## Requirements
 
-Node 12 or higher.
+Node 14 or higher.
 
 ## Installation
 
@@ -17,20 +17,20 @@ npm install stoobly-node --save
 ## Usage
 
 ```js
-const { default: Stoobly } = require('stoobly');
+const { default: Stoobly } = require('stoobly-node');
 ```
 
 Or using ES modules:
 
 ```js
-import Stoobly from 'stoobly';
+import Stoobly from 'stoobly-node';
 ```
 
 ## Examples
 
 ### Setting a scenario
 
-Configures outgoing requests to specify a scenario to use. sessionId defaults to current time
+Configures outgoing requests to specify a scenario to use. sessionId defaults to current time.
 
 ```js
 const stoobly = new Stoobly();
@@ -38,11 +38,10 @@ const stoobly = new Stoobly();
 stoobly.useScenario('<SCENARIO-KEY>');
 ```
 
-Configures outgoing requests to specify a scenario and sessionId to use
+Configures outgoing requests to specify a scenario and sessionId to use.
 
 ```js
 const stoobly = new Stoobly();
 
 stoobly.useScenario('<SCENARIO-KEY>', { sessionId: '<SESSION-ID>' });
-
 ```
