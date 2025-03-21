@@ -1,3 +1,3 @@
-export interface UseScenarioOptions {
+export interface ApplyScenarioOptions {
   sessionId?: string;
 }

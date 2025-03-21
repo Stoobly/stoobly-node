@@ -1,7 +1,7 @@
 import {ConfigResource, HttpService} from './core/http';
 import {Interceptor} from './core/interceptor';
 import {Config} from './models/config';
-import {UseScenarioOptions} from './types/options';
+import {ApplyScenarioOptions} from './types/options';
 
 export default class Stoobly {
   httpService: HttpService;
@@ -21,7 +21,7 @@ export default class Stoobly {
     this.httpService = new HttpService(url);
   }
 
-  useScenario(scenarioKey?: string, options?: UseScenarioOptions) {
+  applyScenario(scenarioKey?: string, options?: ApplyScenarioOptions) {
     if (this.interceptor.active) {
       this.interceptor.deactivate();
     } 
