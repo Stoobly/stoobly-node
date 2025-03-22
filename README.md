@@ -30,15 +30,15 @@ import Stoobly from 'stoobly-node';
 
 ### Setting a scenario
 
-Configures outgoing requests to specify a scenario to use. sessionId defaults to current time.
+Configures requests to https://docs.stoobly.com to specify a scenario. sessionId defaults to current time.
 
 ```js
 const stoobly = new Stoobly();
 
-const sessionId = stoobly.applyScenario('<SCENARIO-KEY>');
+const sessionId = stoobly.applyScenario('<SCENARIO-KEY>', { origins: ['https://docs.stoobly.com'] });
 ```
 
-Configures outgoing requests to specify a scenario and resume a session.
+Configures requests to https://docs.stoobly.com  specify a scenario and resume a session.
 
 ```js
 const stoobly = new Stoobly();
