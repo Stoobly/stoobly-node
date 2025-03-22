@@ -11,7 +11,7 @@ Node 14 or higher.
 Install the package with:
 
 ```sh
-npm install stoobly-node --save
+npm install stoobly-node --save-dev
 ```
 
 ## Usage
