@@ -1,4 +1,4 @@
-import {DEFAULT_UI_URL} from '@constants/config';
+import {DEFAULT_UI_URL} from './constants/config';
 import {ConfigResource, HttpService} from './core/http';
 import {Interceptor} from './core/interceptor';
 import {Config} from './models/config';
@@ -23,13 +23,13 @@ export default class Stoobly {
   }
 
   applyScenario(scenarioKey?: string, options?: ApplyScenarioOptions) {
-    if (this.interceptor.active) {
-      this.interceptor.deactivate();
+    if (this.interceptor.applied) {
+      this.interceptor.clear();
     } 
 
     if (scenarioKey) {
       this.interceptor.withScenario(scenarioKey);
-      return this.interceptor.activate(options?.sessionId);
+      return this.interceptor.apply(options?.sessionId);
     }
   } 
 }

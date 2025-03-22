@@ -7,22 +7,28 @@ import { Interceptor } from "@core/interceptor";
 describe("Interceptor", () => {
   const scenarioKey = "test-key";
   const sessionId = "test-session";
-  const url = "https://example.com";
+  const allowedOrigin = "https://docs.stoobly.com";
+  const notAllowedOrigin = "https://example.com";
 
   let interceptor: Interceptor;
 
   describe('fetch', () => {
-    let fetchMock = jest.fn(async (input: RequestInfo | URL, init?: RequestInit): Promise<Response> => {
+    const allowedUrl = `${allowedOrigin}/test`;
+
+    let fetchMock = jest.fn(async (): Promise<Response> => {
       return Promise.resolve(new Response(null, { status: 200 }));
     });
     let originalFetch: typeof window.fetch = window.fetch;
 
     beforeAll(async () => {
       Interceptor.originalFetch = fetchMock;
+
       interceptor = new Interceptor();
       interceptor.withScenario(scenarioKey);
-      interceptor.activate(sessionId);
-      await fetch(url);
+      interceptor.withOrigins([allowedUrl])
+      interceptor.apply(sessionId);
+
+      await fetch(allowedUrl);
     });
 
     afterAll(() => {
@@ -30,7 +36,7 @@ describe("Interceptor", () => {
     });
 
     test(`adds '${SCENARIO_KEY}' header to fetch requests`, async () => {
-      expect(fetchMock).toHaveBeenCalledWith(url, {
+      expect(fetchMock).toHaveBeenCalledWith(allowedUrl, {
         headers: expect.objectContaining({
           [SCENARIO_KEY]: scenarioKey,
         }),
@@ -38,25 +44,36 @@ describe("Interceptor", () => {
     });
 
     test(`adds '${SESSION_ID}' header to fetch requests`, async () => {
-      expect(fetchMock).toHaveBeenCalledWith(url, {
+      expect(fetchMock).toHaveBeenCalledWith(allowedUrl, {
         headers: expect.objectContaining({
           [SESSION_ID]: expect.any(String),
         }),
       });
     });
 
+    describe('when not allowed', () => {
+      const notAllowedUrl = `${notAllowedOrigin}/test`;
+
+      beforeAll(async () => {
+        await fetch(notAllowedUrl);
+      });
+
+      test(`headers not added`, async () => {
+        expect(fetchMock).toHaveBeenCalledWith(notAllowedUrl, undefined);
+      });
+    });
+
     describe('deactivate', () => {
       beforeAll(async () => {
         fetchMock.mockClear();
-        interceptor.deactivate();
+        interceptor.clear();
 
-        await fetch(url);
+        await fetch(allowedUrl);
       });
 
       test(`does not add '${SCENARIO_KEY}' header to fetch requests`, async () => {
         expect(fetchMock).not.toHaveBeenCalledWith(SCENARIO_KEY, scenarioKey);
       });
-
 
       test(`does not add '${SESSION_ID}' header to fetch requests`, async () => {
         expect(fetchMock).not.toHaveBeenCalledWith(SESSION_ID, expect.any(String));
@@ -65,15 +82,18 @@ describe("Interceptor", () => {
   });
 
   describe('XMLHttpRequest.prototype.open', () => {
+    const allowedUrl = `${allowedOrigin}/test`;
+
     let originalXMLHttpRequestOpen: typeof XMLHttpRequest.prototype.open = XMLHttpRequest.prototype.open;
     let setRequestHeaderMock: SpiedFunction<(name: string, value: string) => void>;
 
     beforeAll(() => {
       interceptor.withScenario(scenarioKey);
-      interceptor.activate(sessionId);
+      interceptor.withOrigins([allowedUrl]);
+      interceptor.apply(sessionId);
 
       const xhr = new XMLHttpRequest();
-      xhr.open("GET", url);
+      xhr.open("GET", allowedUrl);
       setRequestHeaderMock = jest.spyOn(xhr, "setRequestHeader");
       xhr.dispatchEvent(new Event("readystatechange"));
     });
@@ -86,18 +106,30 @@ describe("Interceptor", () => {
       expect(setRequestHeaderMock).toHaveBeenCalledWith(SCENARIO_KEY, scenarioKey);
     });
 
-
     test(`adds '${SESSION_ID}' header to fetch requests`, async () => {
       expect(setRequestHeaderMock).toHaveBeenCalledWith(SESSION_ID, expect.any(String));
+    });
+
+    describe('when not allowed', () => {
+      const notAllowedUrl = `${notAllowedOrigin}/test`;
+
+      beforeAll(async () => {
+        setRequestHeaderMock.mockClear();
+        await fetch(notAllowedUrl);
+      });
+
+      test(`headers not added`, async () => {
+        expect(setRequestHeaderMock).not.toHaveBeenCalled();
+      });
     });
 
     describe('deactivate', () => {
       beforeAll(() => {
         setRequestHeaderMock.mockClear();
-        interceptor.deactivate();
+        interceptor.clear();
 
         const xhr = new XMLHttpRequest();
-        xhr.open("GET", url);
+        xhr.open("GET", allowedUrl);
         setRequestHeaderMock = jest.spyOn(xhr, "setRequestHeader");
         xhr.dispatchEvent(new Event("readystatechange"));
       });

@@ -4,25 +4,26 @@ export class Interceptor {
   static originalXMLHttpRequestOpen = XMLHttpRequest ? XMLHttpRequest.prototype.open : null;
   static originalFetch = window ? window.fetch.bind(window) : null;
 
-  private _active: boolean = false;
+  private _applied: boolean = false;
+  private origins: string[] = [];
   private scenarioKey: string | null = null;
   private sessionId: string | null = null;
 
-  get active() {
-    return this._active;
+  get applied() {
+    return this._applied;
   }
 
-  activate(sessionId?: string) {
+  apply(sessionId?: string) {
     this.sessionId = sessionId || (new Date()).getTime().toString();
 
     this.decorateFetch();
     this.decorateXMLHttpRequestOpen();
-    this._active = true;
+    this._applied = true;
 
     return this.sessionId;
   }
 
-  deactivate() {
+  clear() {
     if (Interceptor.originalFetch) {
       window.fetch = Interceptor.originalFetch;
     }
@@ -31,7 +32,11 @@ export class Interceptor {
       XMLHttpRequest.prototype.open = Interceptor.originalXMLHttpRequestOpen;
     }
 
-    this._active = false;
+    this._applied = false;
+  }
+
+  withOrigins(origins: string[]) {
+    this.origins = origins;
   }
 
   withScenario(key: string): void {
@@ -44,30 +49,43 @@ export class Interceptor {
     }
 
     const self = this;
-    const selfFetch = Interceptor.originalFetch;
+    const original = Interceptor.originalFetch;
 
     window.fetch = async (input: RequestInfo | URL, init?: RequestInit): Promise<Response> => {
-      if (!init) init = {};
+      const url = input instanceof Request ? input.url : input.toString();
 
-      const customHeaders: Record<string, string> = {};
+      if (self.allowedUrl(url)) {
+        const customHeaders: Record<string, string> = {};
 
-      if (self.scenarioKey) {
-        customHeaders[SCENARIO_KEY] = self.scenarioKey;
+        if (self.scenarioKey) {
+          customHeaders[SCENARIO_KEY] = self.scenarioKey;
+        }
+
+        if (self.sessionId) {
+          customHeaders[SESSION_ID] = self.sessionId;
+        }
+
+        if (!init) init = {};
+        init.headers = {
+          ...(init.headers as Record<string, string>),
+          ...customHeaders,
+        };
       }
 
-      if (self.sessionId) {
-        customHeaders[SESSION_ID] = self.sessionId;
-      }
-
-      init.headers = {
-        ...(init.headers as Record<string, string>),
-        ...customHeaders,
-      };
-
-      return selfFetch(input, init);
+      return original(input, init);
     };
 
     return true;
+  }
+
+  private allowedUrl(url: string) {
+    for (let i = 0; i < this.origins.length; ++i) {
+      if (url.startsWith(this.origins[i])) {
+        return true; // Only allow urls that start with one of the specified origins
+      }
+    }
+
+    return false;
   }
 
   private decorateXMLHttpRequestOpen() {
@@ -76,7 +94,7 @@ export class Interceptor {
     }
 
     const self = this;
-    const selfOpen = Interceptor.originalXMLHttpRequestOpen;
+    const original = Interceptor.originalXMLHttpRequestOpen;
 
     XMLHttpRequest.prototype.open = function (
       method: string,
@@ -86,11 +104,14 @@ export class Interceptor {
       password?: string | null
     ): void {
       this.addEventListener("readystatechange", function () {
-        if (this.readyState !== 1) {
-          // Not opened
+        if (this.readyState !== 1) { 
+          return; // Not opened
+        }
+        
+        if (!self.allowedUrl(url)) {
           return;
         }
-          
+
         if (self.scenarioKey) {
           this.setRequestHeader(SCENARIO_KEY, self.scenarioKey);
         }
@@ -99,7 +120,7 @@ export class Interceptor {
           this.setRequestHeader(SESSION_ID, self.sessionId);
         }
       });
-      return selfOpen.apply(this, arguments as any);
+      return original.apply(this, arguments as any);
     };
 
     return true;

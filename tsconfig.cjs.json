@@ -18,6 +18,5 @@
     "strictFunctionTypes": true,
     "types": ["node"]
   },
-  "include": ["./src/**/*"],
-  "exclude": ["./src/stripe.esm.node.ts", "./src/stripe.esm.worker.ts"],
+  "include": ["./src/**/*"]
 }
