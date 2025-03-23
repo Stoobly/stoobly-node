@@ -29,6 +29,7 @@ export default class Stoobly {
 
     if (scenarioKey) {
       this.interceptor.withScenario(scenarioKey);
+      this.interceptor.withOrigins(options?.origins || []);
       return this.interceptor.apply(options?.sessionId);
     }
   } 
