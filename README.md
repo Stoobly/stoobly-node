@@ -38,10 +38,10 @@ const stoobly = new Stoobly();
 const sessionId = stoobly.applyScenario('<SCENARIO-KEY>', { origins: ['https://docs.stoobly.com'] });
 ```
 
-Configures requests to origin https://docs.stoobly.com to specify a scenario and resume a session specified by `sessionId`.
+Configures requests to origin https://docs.stoobly.com to specify a scenario. Resume a session by specifying a `sessionId`.
 
 ```js
 const stoobly = new Stoobly();
 
-stoobly.applyScenario('<SCENARIO-KEY>', { sessionId: '<SESSION-ID>' });
+stoobly.applyScenario('<SCENARIO-KEY>', { origins: ['https://docs.stoobly.com'], sessionId: '<SESSION-ID>' });
 ```
