@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {describe, expect, it} from '@jest/globals';
 
+import {DEFAULT_UI_URL} from '@constants/config';
 import {ConfigResource, HttpService} from '@core/http';
 import {Config, Scenario} from '@models/config';
 
@@ -10,7 +11,7 @@ describe('config', () => {
   let config: Config;
 
   beforeAll(() => {
-    const httpService = new HttpService('http://localhost:4200');
+    const httpService = new HttpService(DEFAULT_UI_URL);
     const resource = new ConfigResource(httpService);
     config = new Config(resource);
   });

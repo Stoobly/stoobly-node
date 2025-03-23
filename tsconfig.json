@@ -2,8 +2,10 @@
   "compilerOptions": {
     "noEmit": true,
     "paths": {
+      "@constants/*": ["./src/constants/*"],
       "@core/*": ["./src/core/*"],
-      "@models/*": ["./src/models/*"]
+      "@models/*": ["./src/models/*"],
+      "@types/*": ["./src/types/*"]
     },
     "types": ["jest", "node"]
   },

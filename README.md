@@ -11,7 +11,7 @@ Node 14 or higher.
 Install the package with:
 
 ```sh
-npm install stoobly-node --save
+npm install stoobly-node --save-dev
 ```
 
 ## Usage
@@ -26,14 +26,22 @@ Or using ES modules:
 import Stoobly from 'stoobly-node';
 ```
 
-## Configuration
+## Examples
 
 ### Setting a scenario
+
+Configures requests to https://docs.stoobly.com to specify a scenario. sessionId defaults to current time.
 
 ```js
 const stoobly = new Stoobly();
 
-stoobly.config.scenario.set(<SCENARIO-KEY>)
-    .then(res => console.log(res.data))
-    .catch(error => console.error(error));
+const sessionId = stoobly.applyScenario('<SCENARIO-KEY>', { origins: ['https://docs.stoobly.com'] });
+```
+
+Configures requests to https://docs.stoobly.com  specify a scenario and resume a session.
+
+```js
+const stoobly = new Stoobly();
+
+stoobly.applyScenario('<SCENARIO-KEY>', { sessionId: '<SESSION-ID>' });
 ```

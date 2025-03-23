@@ -1,0 +1,1 @@
+export const DEFAULT_UI_URL = 'http://localhost:4200';
