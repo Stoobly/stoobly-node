@@ -54,7 +54,7 @@ export class Interceptor {
         method: '*',
         url: `${origin}/**`,
       },
-      (req: { headers: any }) => {
+      (req: { continue: () => void, headers: any }) => {
         if (this.scenarioKey) {
           req.headers[SCENARIO_KEY] = this.scenarioKey;
         }
@@ -62,6 +62,8 @@ export class Interceptor {
         if (this.sessionId) {
           req.headers[SESSION_ID] = this.sessionId;
         }
+
+        req.continue();
       });
     });
   }
