@@ -16,12 +16,17 @@ export class Interceptor {
   apply(sessionId?: string) {
     this.sessionId = sessionId || (new Date()).getTime().toString();
 
-    this.decorateFetch();
-    this.decorateXMLHttpRequestOpen();
+    if (typeof window !== "undefined" && "cy" in window) {
+      this.decorateCypress(); // Cypress loads the application within an iframe
+    } else {
+      this.decorateFetch();
+      this.decorateXMLHttpRequestOpen();
+    }
+
     this._applied = true;
 
     return this.sessionId;
-  }
+  } 
 
   clear() {
     if (Interceptor.originalFetch) {
@@ -41,6 +46,24 @@ export class Interceptor {
 
   withScenario(key: string): void {
     this.scenarioKey = key;
+  }
+
+  private decorateCypress() {
+    this.origins.forEach((origin) => {
+      (window as any).cy?.intercept({
+        method: '*',
+        url: `${origin}/**`,
+      },
+      (req: { headers: any }) => {
+        if (this.scenarioKey) {
+          req.headers[SCENARIO_KEY] = this.scenarioKey;
+        }
+
+        if (this.sessionId) {
+          req.headers[SESSION_ID] = this.sessionId;
+        }
+      });
+    });
   }
 
   private decorateFetch() {

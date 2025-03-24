@@ -8,8 +8,8 @@ export default class Stoobly {
   httpService: HttpService;
   interceptor: Interceptor;
 
-  constructor() {
-    this.httpService = new HttpService(DEFAULT_UI_URL);
+  constructor(apiUrl: string = DEFAULT_UI_URL) {
+    this.httpService = new HttpService(apiUrl);
     this.interceptor = new Interceptor();
   }
 
