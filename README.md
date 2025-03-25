@@ -11,19 +11,19 @@ Node 18 or higher.
 Install the package with:
 
 ```sh
-npm install stoobly-node --save-dev
+npm install stoobly --save-dev
 ```
 
 ## Usage
 
 ```js
-const { default: Stoobly } = require('stoobly-node');
+const { default: Stoobly } = require('stoobly');
 ```
 
 Or using ES modules:
 
 ```js
-import Stoobly from 'stoobly-node';
+import Stoobly from 'stoobly';
 ```
 
 ## Examples
