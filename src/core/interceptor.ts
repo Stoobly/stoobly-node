@@ -5,7 +5,7 @@ export class Interceptor {
   static originalFetch = window ? window.fetch.bind(window) : null;
 
   private _applied: boolean = false;
-  private origins: string[] = [];
+  private urls: (RegExp | string)[] = [];
   private scenarioKey: string | null = null;
   private sessionId: string | null = null;
 
@@ -40,8 +40,8 @@ export class Interceptor {
     this._applied = false;
   }
 
-  withOrigins(origins: string[]) {
-    this.origins = origins;
+  withUrls(urls: (RegExp | string)[]) {
+    this.urls = urls;
   }
 
   withScenario(key: string): void {
@@ -49,12 +49,8 @@ export class Interceptor {
   }
 
   private decorateCypress() {
-    this.origins.forEach((origin) => {
-      (window as any).cy?.intercept({
-        method: '*',
-        url: `${origin}/**`,
-      },
-      (req: { continue: () => void, headers: any }) => {
+    this.urls.forEach((url) => {
+      (window as any).cy?.intercept(url, (req: { continue: () => void, headers: any }) => {
         if (this.scenarioKey) {
           req.headers[SCENARIO_KEY] = this.scenarioKey;
         }
@@ -104,9 +100,17 @@ export class Interceptor {
   }
 
   private allowedUrl(url: string) {
-    for (let i = 0; i < this.origins.length; ++i) {
-      if (url.startsWith(this.origins[i])) {
-        return true; // Only allow urls that start with one of the specified origins
+    for (let i = 0; i < this.urls.length; ++i) {
+      const urlAllowed = this.urls[i];
+
+      if (urlAllowed instanceof RegExp) {
+        if (urlAllowed.test(url)) {
+          return true;
+        }
+      }
+
+      if (urlAllowed === url) {
+        return true;
       }
     }
 

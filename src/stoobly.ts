@@ -29,7 +29,7 @@ export default class Stoobly {
 
     if (scenarioKey) {
       this.interceptor.withScenario(scenarioKey);
-      this.interceptor.withOrigins(options?.origins || []);
+      this.interceptor.withUrls(options?.urls || []);
       return this.interceptor.apply(options?.sessionId);
     }
   } 
