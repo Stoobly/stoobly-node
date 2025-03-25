@@ -1,5 +1,5 @@
 {
-  "name": "@stoobly/stoobly-node",
+  "name": "stoobly-node",
   "version": "0.3.0",
   "description": "Node.js library for stoobly-agent",
   "files": [
