@@ -35,7 +35,7 @@ Configures requests to origin https://docs.stoobly.com to specify a scenario. `s
 ```js
 const stoobly = new Stoobly();
 
-const sessionId = stoobly.applyScenario('<SCENARIO-KEY>', { origins: ['https://docs.stoobly.com'] });
+const sessionId = stoobly.applyScenario('<SCENARIO-KEY>', { urls: [new RegExp('https://docs.stoobly.com/.*')] });
 ```
 
 Configures requests to origin https://docs.stoobly.com to specify a scenario. Resume a session by specifying a `sessionId`.
@@ -43,5 +43,18 @@ Configures requests to origin https://docs.stoobly.com to specify a scenario. Re
 ```js
 const stoobly = new Stoobly();
 
-stoobly.applyScenario('<SCENARIO-KEY>', { origins: ['https://docs.stoobly.com'], sessionId: '<SESSION-ID>' });
+stoobly.applyScenario('<SCENARIO-KEY>', { urls: [new RegExp('https://docs.stoobly.com/.*')], sessionId: '<SESSION-ID>' });
+```
+
+Configures only requests https://docs.stoobly.com/use-cases and https://docs.stoobly.com/getting-started to specify a scenario.
+
+```js
+const stoobly = new Stoobly();
+
+stoobly.applyScenario('<SCENARIO-KEY>', { 
+    urls: [
+        'https://docs.stoobly.com/use-cases',
+        'https://docs.stoobly.com/getting-started'
+    ]
+});
 ```
