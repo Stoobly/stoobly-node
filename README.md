@@ -1,6 +1,6 @@
 # Stoobly Node.js library
 
-The Stoobly Node library provides convenient access to [stoobly-agent](https://github.com/Stoobly/stoobly-agent) API.
+The Stoobly Javascript library provides convenient access to [stoobly-agent](https://github.com/Stoobly/stoobly-agent) API.
 
 ## Requirements
 
