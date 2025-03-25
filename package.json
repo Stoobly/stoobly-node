@@ -1,7 +1,7 @@
 {
-  "name": "stoobly-node",
-  "version": "0.2.2",
-  "description": "Node.js library for Stoobly API",
+  "name": "@stoobly/stoobly-node",
+  "version": "0.3.0",
+  "description": "Node.js library for stoobly-agent",
   "files": [
     "dist/**"
   ],
