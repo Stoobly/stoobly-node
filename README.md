@@ -59,7 +59,7 @@ stoobly.applyScenario('<SCENARIO-KEY>', {
 });
 ```
 
-Integrate with Cypress.
+### Integrate with Cypress
 
 ```js
 
@@ -68,10 +68,11 @@ describe('Scenario', () => {
         const stoobly = new Stoobly();
         const urls = ['<URLS>'];
     
-        // applyScenario uses cy.intercept which gets reset before every test. See: https://docs.cypress.io/api/commands/intercept#:~:text=All%20intercepts%20are%20automatically%20cleared%20before%20every%20test.
         // WARNING: if a synchronous request is used, this will cause Cypress to hang. See: https://github.com/cypress-io/cypress/issues/29566
         // Example of a synchronous request: https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest_API/Synchronous_and_Asynchronous_Requests#synchronous_request
         stoobly.applyScenario('<SCENARIO-KEY>', { urls });
     });
 });
 ```
+
+When available, `stoobly.applyScenario` uses `cy.intercept` which gets reset before every test. See: https://docs.cypress.io/api/commands/intercept#:~:text=All%20intercepts%20are%20automatically%20cleared%20before%20every%20test.
