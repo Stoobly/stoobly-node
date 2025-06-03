@@ -59,7 +59,7 @@ stoobly.applyScenario('<SCENARIO-KEY>', {
 });
 ```
 
-### Integrate with Cypress
+### Integrating with Cypress
 
 ```js
 
